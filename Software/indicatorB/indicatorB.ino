@@ -83,6 +83,7 @@ unsigned long lastUpdate = 0;
 int currentState = 0;
 int roomClear = 0;
 boolean toggle = false;
+unsigned long lastSetBusy = 0;
 
 unsigned long lastRecvTime = 0;
 unsigned long lastStatusMillis = 0;
@@ -125,6 +126,13 @@ void loop() {
 				digitalWrite(BUSY, LOW);
 				toggle = false;
 			}
+
+			if ((millis() - lastSetBusy > (1000*60*20)) && (lastSetBusy > 0)) { //1.2million msec = 20 minutes, reset room back to clear
+				roomClear = 1;
+				lastSetBusy = -1;
+				send(roomClear);
+				//Don't show lights, do this quietly
+			}
 			break;
 	}
 
@@ -140,12 +148,14 @@ void loop() {
 		  case GESTURE_UP:
 		    roomClear = 1;
 		    send(roomClear);
+		    lastSetBusy = -1;
 		    lights(true,2);
 		    break;
 
 		  case GESTURE_DOWN:
 		    roomClear = 0;
 		    send(roomClear);
+		    lastSetBusy = millis();
 		    lights(false,2);
 		    break;
 		}
@@ -181,6 +191,9 @@ void recv() {
 		}*/
 		if (med < 200) {
 			roomClear = med;
+			if (roomClear == 0) {
+				lastSetBusy = millis();
+			}
 		}
 		lastRecvTime = millis();
 		currentState = 1;
