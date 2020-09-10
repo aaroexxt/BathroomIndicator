@@ -150,9 +150,10 @@ void loop() {
 		    break;
 		}
 	}
-	if (millis() - lastStatusMillis > 1500) {
+	if (millis() - lastStatusMillis > 500) {
 		send(200);
-		if (millis() - lastRecvTime >= 4700) {
+		send(roomClear);
+		if (millis() - lastRecvTime >= 15000) {
 			currentState = 0;
 		}
 		lastStatusMillis = millis();
@@ -214,9 +215,11 @@ void lights(boolean state, int count) {
 
 	for (int i = 0; i<count; i++) {
 		delay(100);
+		send(roomClear);
 		digitalWrite(CLEAR, LOW);
 		digitalWrite(BUSY, LOW);
 		delay(100);
+		send(roomClear);
 		if (state) {
 			analogWrite(CLEAR, 32);
 			digitalWrite(BUSY, LOW);
