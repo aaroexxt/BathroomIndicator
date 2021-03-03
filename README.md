@@ -1,5 +1,5 @@
 # BathroomIndicator
- How do you know if someone's in the bathroom? A custom PCB, of course...
+ BLISS - Bathroom Location and Indication Security System aka an overcomplicated way to prevent accidental walk-ins, and a great PCB learning project!
 
 ## Design Intent
 I built this mostly to practice my PCB design and layout skills, but it's actually quite cool in person. Basically, it's designed to be a comprehensive system for people who have to share space to have a way to tell others that they're busy. I've installed a set of these on a bathroom I share with my sister (who thought that was a good idea?) so that we can both know when somebody else is using the bathroom.
